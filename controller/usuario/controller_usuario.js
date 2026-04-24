@@ -7,7 +7,7 @@
 
 const usuarioDAO = require("../../model/DAO/usuario.js")
 const mesagensDefault = require("../modulo/config_messages.js")
-const validarDados = require("./validar_dados.js")
+const validarDados = require("../modulo/validar_dados.js")
 const validarAtributos = require("../modulo/validar_atributos.js")
 
 // GET

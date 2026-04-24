@@ -4,19 +4,7 @@
  * Data: 24/04/2026
  * Versão: 1.0
  ************************************************/
-const validarDadosFamilia = async function(familia) {
-    try {
-        if(familia.nome == null || familia.nome == "" || familia.nome == undefined || familia.nome.length > 100){
-            return false
-        }else if(familia.telefone_residencial == null || familia.telefone_residencial == "" || familia.telefone_residencial == undefined || familia.telefone_residencial.length > 100){
-            return false
-        }else{
-            return true
-        }
-    } catch (error) {
-        
-    }
-}
+
 const validarDadosUsuario = async function(usuario){
     try {
         if(usuario.nome == null || usuario.nome == "" || usuario.nome == undefined || usuario.nome.length > 100){
@@ -44,8 +32,36 @@ const validarDadosUsuario = async function(usuario){
         console.log(error)   
     }
 }
-
+const validarDadosFamilia = async function(familia) {
+    try {
+        if(familia.nome == null || familia.nome == "" || familia.nome == undefined || familia.nome.length > 100){
+            return false
+        }else if(familia.telefone_residencial == null || familia.telefone_residencial == "" || familia.telefone_residencial == undefined || familia.telefone_residencial.length > 100){
+            return false
+        }else{
+            return true
+        }
+    } catch (error) {
+        console.log(error)  
+    }
+}
+const validarDadosEvento = async function(evento) {
+    try {
+        if(familia.titulo == null || familia.titulo == "" || familia.titulo == undefined || familia.titulo.length > 100){
+            return false
+        }else if(familia.descricao == null || familia.descricao == "" || familia.descricao == undefined || familia.descricao.length > 100){
+            return false
+        }else if(familia.data == null || familia.data == "" || familia.data == undefined || familia.data.length > 100){
+            return false
+        }else{
+            return true
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}
 module.exports = {
     validarDadosUsuario,
-    validarDadosFamilia
+    validarDadosFamilia,
+    validarDadosEvento
 }

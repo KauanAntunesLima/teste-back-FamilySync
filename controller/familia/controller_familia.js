@@ -6,7 +6,7 @@
  ************************************************/
 const familiaDAO = require("../../model/DAO/familia.js")
 const mesagensDefault = require("../modulo/config_messages.js")
-const validarDados = require("./validar_dados.js")
+const validarDados = require("../modulo/validar_dados.js")
 const validarAtributos = require("../modulo/validar_atributos.js")
 
 //GET
@@ -56,7 +56,7 @@ const listarFamiliaID = async function(id) {
 }
 //POST
 const criarFamilia = async function(familia, contentType) {
-    let dadosValidados = validarDados.validarDadosUsuario(usuario)
+    let dadosValidados = validarDados.validarDadosFamilia(familia)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     try {
         if(contentTypeValidado){
@@ -84,7 +84,7 @@ const criarFamilia = async function(familia, contentType) {
 }
 //PUT
 const atulizarFamilia = async function(familia, contentType, id) {
-    let dadosValidados = validarDados.validarDadosUsuario(usuario)
+    let dadosValidados = validarDados.validarDadosFamilia(usuario)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     let idValidado = validarAtributos.validarValorId(id)
     try {
