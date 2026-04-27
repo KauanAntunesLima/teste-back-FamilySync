@@ -16,7 +16,7 @@ const listarFamilias = async function() {
         if(result){
             if(result.length > 0){
                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                mesagensDefault.HEADER.Response.usuarios = result
+                mesagensDefault.HEADER.Response.familias = result
             }else{
                 mesagensDefault.ERRO_NOT_FOUND
             }  
@@ -36,7 +36,7 @@ const listarFamiliaID = async function(id) {
             if(result){
                 if(result.length > 0){
                     mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                    mesagensDefault.HEADER.Response.usuario = result
+                    mesagensDefault.HEADER.Response.familia = result
                 }else{
                     mesagensDefault.ERRO_NOT_FOUND
                 }
@@ -83,9 +83,9 @@ const atulizarFamilia = async function(familia, contentType, id) {
     let dadosValidados = validarDados.validarDadosFamilia(familia)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     let idValidado = validarAtributos.validarValorId(id)
-    let buscarId = familiaDAO.getFamilyById(id)
     try {
         if(idValidado){
+            let buscarId = familiaDAO.getFamilyById(id)
             if(contentTypeValidado){
                 if(dadosValidados){
                     if(buscarId.StatusCode == 200){

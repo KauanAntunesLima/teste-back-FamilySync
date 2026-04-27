@@ -17,7 +17,7 @@ const listarEventos = async function(){
         if(result){
             if(result.length > 0){
                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                mesagensDefault.HEADER.Response.usuarios = result
+                mesagensDefault.HEADER.Response.eventos = result
             }else{
                 mesagensDefault.ERRO_NOT_FOUND
             }  
@@ -37,7 +37,7 @@ const listarEventoID = async function(id){
             if(result){
                 if(result.length > 0){
                     mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                    mesagensDefault.HEADER.Response.usuario = result
+                    mesagensDefault.HEADER.Response.evento = result
                 }else{
                     mesagensDefault.ERRO_NOT_FOUND
                 }
@@ -53,7 +53,7 @@ const listarEventoID = async function(id){
 }
 //POST
 const criarEvento = async function(evento, contentType) {
-    let dadosValidados = validarDados.validarDadosEvento(usuario)
+    let dadosValidados = validarDados.validarDadosEvento(evento)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     try {
         if(contentTypeValidado){
@@ -124,7 +124,7 @@ const excluirEvento = async function(id) {
         if(idValidado){
             let buscarId = await eventoDAO.getEventById(id)
             if(buscarId.StatusCode == 200){
-                let result = await eventoDAO.getEventById(id)
+                let result = await eventoDAO.setDeleteEvent(id)
                 if(result){
                     if(result.length > 0){
                         mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_DELETED_ITEM.StatusCode
