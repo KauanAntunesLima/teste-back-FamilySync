@@ -32,21 +32,17 @@ const listarFamiliaID = async function(id) {
     let idValidado = validarAtributos.validarValorId(id)
     try {
         if(idValidado){
-            if(buscarId.StatusCode == 200){
-                let result = await familiaDAO.getFamilyById(id)
-                if(result){
-                    if(result.length > 0){
-                        mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                        mesagensDefault.HEADER.Response.usuario = result
-                    }else{
-                        mesagensDefault.ERRO_NOT_FOUND
-                    }
+            let result = await familiaDAO.getFamilyById(id)
+            if(result){
+                if(result.length > 0){
+                    mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
+                    mesagensDefault.HEADER.Response.usuario = result
                 }else{
-                    mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
-                }    
+                    mesagensDefault.ERRO_NOT_FOUND
+                }
             }else{
-                return buscarId
-            }
+                mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
+            }    
         }else{
             mesagensDefault.ERRO_INVALID_ID
         }
@@ -84,9 +80,10 @@ const criarFamilia = async function(familia, contentType) {
 }
 //PUT
 const atulizarFamilia = async function(familia, contentType, id) {
-    let dadosValidados = validarDados.validarDadosFamilia(usuario)
+    let dadosValidados = validarDados.validarDadosFamilia(familia)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     let idValidado = validarAtributos.validarValorId(id)
+    let buscarId = familiaDAO.getFamilyById(id)
     try {
         if(idValidado){
             if(contentTypeValidado){
@@ -121,9 +118,9 @@ const atulizarFamilia = async function(familia, contentType, id) {
 //DELETE
 const excluirFamilia = async function(id) {
     let idValidado = validarAtributos.validarValorId(id)
-    let buscarId = await usuarioDAO.getUserById(id)
     try {
         if(idValidado){
+            let buscarId = await familiaDAO.getFamilyById(id)
             if(buscarId.StatusCode == 200){
                 let result = await familiaDAO.setDeleteFamily(id)
                 if(result){

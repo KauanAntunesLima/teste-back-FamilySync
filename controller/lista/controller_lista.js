@@ -1,23 +1,22 @@
 /***********************************************
- * Objetivo: Arquivo de responsavel pela manipulação da camada model de usuarios
+ * Objetivo: Arquivo de responsavel pela manipulação da camada model de familia
  * Autor: Gustavo de Paula Silva
- * Data: 24/04/2026
+ * Data: 27/04/2026
  * Versão: 1.0
  ************************************************/
-
-const usuarioDAO = require("../../model/DAO/usuario.js")
+const listaDAO = require("../../model/DAO/lista.js")
 const mesagensDefault = require("../modulo/config_messages.js")
 const validarDados = require("../modulo/validar_dados.js")
 const validarAtributos = require("../modulo/validar_atributos.js")
 
-// GET
-const listarUsuarios = async function(){
+//GET
+const listarListas = async function() {
     try {
-        let result = await usuarioDAO.getAllUsers()
+        let result = await listaDAO.getAllLists()
         if(result){
             if(result.length > 0){
                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                mesagensDefault.HEADER.Response.usuarios = result
+                mesagensDefault.HEADER.Response.listas = result
             }else{
                 mesagensDefault.ERRO_NOT_FOUND
             }  
@@ -28,17 +27,16 @@ const listarUsuarios = async function(){
         mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
-
-// GET id
-const listarUsuarioID = async function(id){
+//GET id
+const listarListaID = async function(id) {
     let idValidado = validarAtributos.validarValorId(id)
     try {
         if(idValidado){
-            let result = await usuarioDAO.getUserById(id)
+            let result = await listaDAO.getListById(id)
             if(result){
                 if(result.length > 0){
                     mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                    mesagensDefault.HEADER.Response.usuario = result
+                    mesagensDefault.HEADER.Response.lista = result
                 }else{
                     mesagensDefault.ERRO_NOT_FOUND
                 }
@@ -54,13 +52,13 @@ const listarUsuarioID = async function(id){
 }
 
 // POST
-const criarUsuario = async function(usuario, contentType) {
-    let dadosValidados = validarDados.validarDadosUsuario(usuario)
+const criarLista = async function(lista, contentType) {
+    let dadosValidados = validarDados.validarDadosLista(lista)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     try {
         if(contentTypeValidado){
             if(dadosValidados){
-                let result = await usuarioDAO.setInsertUser(usuario)
+                let result = await listaDAO.setInsertList(lista)
                 if(result){
                     if(result.length > 0){
                         mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_CREATED_ITEM.StatusCode
@@ -81,20 +79,20 @@ const criarUsuario = async function(usuario, contentType) {
         mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
-
 // PUT
-const atulizarUsuario = async function(usuario, contentType, id) {
-    let dadosValidados = validarDados.validarDadosUsuario(usuario)
+const atulizarLista = async function(lista, contentType, id) {
+    let dadosValidados = validarDados.validarDadosLista(lista)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     let idValidado = validarAtributos.validarValorId(id)
+
     try {
         if(idValidado){
-            let buscarId = usuarioDAO.getUserById(id)
+            let buscarId = listaDAO.getListById(id)
             if(contentTypeValidado){
                 if(dadosValidados){
-                    if(buscarId.StatusCode == 200){
-                        usuario.id_usuario = parseInt(id)
-                        let result = await usuarioDAO.setUpdateUser(usuario)
+                    if(buscarId){
+                        lista.id_lista = parseInt(id)
+                        let result = await listaDAO.setUpdateList(lista)
                         if(result){
                             if(result.length > 0){
                                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_UPDATED_ITEM.StatusCode
@@ -120,13 +118,13 @@ const atulizarUsuario = async function(usuario, contentType, id) {
     }
 }
 // DELETE
-const excluirUsuario = async function(id) {
+const excluirLista = async function(id) {
     let idValidado = validarAtributos.validarValorId(id)
     try {
         if(idValidado){
-            let buscarId = await usuarioDAO.getUserById(id)
+            let buscarId = await listaDAO.getListById(id)
             if(buscarId.StatusCode == 200){
-                let result = await usuarioDAO.setDeleteUser(id)
+                let result = await listaDAO.setUpdateList(id)
                 if(result){
                     if(result.length > 0){
                         mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_DELETED_ITEM.StatusCode
@@ -146,9 +144,9 @@ const excluirUsuario = async function(id) {
     }
 }
 module.exports = {
-    listarUsuarioID,
-    listarUsuarios,
-    excluirUsuario,
-    atulizarUsuario,
-    criarUsuario,
+    listarListas,
+    listarListaID,
+    criarLista,
+    atulizarLista,
+    excluirLista
 }

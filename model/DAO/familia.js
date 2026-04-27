@@ -44,10 +44,10 @@ const setInsertFamily = async function(familia) {
     try{
         let sql = `insert into tb_usuario(
                         nome,
-                        telefone_residencial,
+                        telefone_residencial
                     )values(
                         '${familia.nome}',
-                        '${familia.telefone_residencial}',
+                        '${familia.telefone_residencial}'
                     )`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
@@ -65,7 +65,7 @@ const setUpdateFamily = async function(familia) {
     try{
         let sql = `update tb_usuario set
                         nome = '${familia.nome}',
-                        telefone_residencial = '${familia.telefone_residencial}',
+                        telefone_residencial = '${familia.telefone_residencial}'
                     where id_familia = ${familia.id_familia}
                     )`
         let result = await knexDatabase.raw(sql)

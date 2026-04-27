@@ -47,11 +47,11 @@ const validarDadosFamilia = async function(familia) {
 }
 const validarDadosEvento = async function(evento) {
     try {
-        if(familia.titulo == null || familia.titulo == "" || familia.titulo == undefined || familia.titulo.length > 100){
+        if(evento.titulo == null || evento.titulo == "" || evento.titulo == undefined || evento.titulo.length > 100){
             return false
-        }else if(familia.descricao == null || familia.descricao == "" || familia.descricao == undefined || familia.descricao.length > 100){
+        }else if(evento.descricao == null || evento.descricao == "" || evento.descricao == undefined || evento.descricao.length > 100){
             return false
-        }else if(familia.data == null || familia.data == "" || familia.data == undefined || familia.data.length > 100){
+        }else if(evento.data == null || evento.data == "" || evento.data == undefined || evento.data.length > 100){
             return false
         }else{
             return true
@@ -60,8 +60,38 @@ const validarDadosEvento = async function(evento) {
         console.log(error)
     }
 }
+const validarDadosItens = async function(item) {
+    try{
+        if(item.nome_item == null || item.nome_item == "" || item.nome_item == undefined || item.nome_item.length > 100){
+            return false
+        }else if(item.quantidade == null || item.quantidade == "" || item.quantidade == undefined || !isNaN(item.quantidade)){
+            return false
+        }else if(item.valor_unitario == null || item.valor_unitario == "" || item.valor_unitario == undefined || !isNaN(item.valor_unitario)){
+            return false
+        }else if(item.comprado == null || item.comprado == undefined || item.comprado != true || item.comprado != false){
+            return false
+        }else{
+            return true
+        }
+    } catch(error){
+        console.log(error)
+    }
+}
+const validarDadosLista = async function(lista) {
+    try {
+        if(lista.nome_lista == null || lista.nome_lista == "" || lista.nome_lista == undefined || lista.nome_lista.length > 100){
+            return false
+        }else{
+            return true
+        }
+    } catch (error) {
+        console.log(error)  
+    }
+}
 module.exports = {
     validarDadosUsuario,
     validarDadosFamilia,
-    validarDadosEvento
+    validarDadosEvento,
+    validarDadosItens,
+    validarDadosLista
 }

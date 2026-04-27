@@ -1,7 +1,7 @@
 /***********************************************
  * Objetivo: Arquivo de responsavel pela realização do CRUD no banco de dados SQL
  * Autor: Gustavo de Paula Silva
- * Data: 22/04/2026
+ * Data: 27/04/2026
  * Versão: 1.0
  ************************************************/
 const knex = require("knex");
@@ -9,10 +9,10 @@ const knexConfig = require("../database_config/knexfile");
 
 const knexDatabase = knex(knexConfig.development);
 
-//GET 
-const getAllEvents = async function() {
+//GET
+const getAllItens = async function() {
     try {
-        let sql = `select * from tb_eventos`
+        let sql = `select * from tb_itens`
         let result = await knexDatabase.raw(sql)
 
         if(Array.isArray(result[0])){
@@ -25,9 +25,9 @@ const getAllEvents = async function() {
     }
 }
 //GET por id
-const getEventById = async function(id) {
+const getItenById = async function(id) {
     try {
-        let sql = `select * from tb_eventos where id_evento = ${id}`
+        let sql = `select * from tb_itens where id_item = ${id}`
         let result = await knexDatabase.raw(sql)
 
         if(Array.isArray(result[0])){
@@ -40,16 +40,18 @@ const getEventById = async function(id) {
     }
 }
 //POST
-const setInsertEvent = async function(evento) {
+const setInsertIten = async function(item) {
     try {
-        let sql = `insert into tb_evento(
-                        titulo,
-                        descricao,
-                        data
+        let sql = `insert into tb_itens(
+                        nome_item,
+                        quantidade,
+                        valor_unitario,
+                        comprado
                     )values(
-                        '${evento.titulo}',
-                        '${evento.descricacao}',
-                        '${evento.data}'     
+                        '${item.nome_item}',
+                        ${item.quantidade},
+                        ${item.valor_unitario},
+                        ${item.comprado}
                     )`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
@@ -62,13 +64,14 @@ const setInsertEvent = async function(evento) {
     }
 }
 //PUT
-const setUpdateEvent = async function(evento) {
+const setUpdateIten = async function(item) {
     try {
-        let sql = `update tb_evento set
-                        titulo = '${evento.titulo}',
-                        descricao = '${evento.descricacao}',
-                        data = '${evento.data}'  
-                    where id_evento = ${evento.id_evento}
+        let sql = `update tb_itens set
+                        nome_item = '${item.nome_item}}',
+                        quantidade = ${item.quantidade},
+                        valor_unitario = ${item.valor_unitario},
+                        comprado = '${item.comprado}  
+                    where id_item = ${item.id_item}
                     )`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
@@ -81,9 +84,9 @@ const setUpdateEvent = async function(evento) {
     }
 }
 //DELETE
-const setDeleteEvent = async function(id) {
+const setDeleteIten = async function(id) {
     try {
-        let = sql = `delete from tb_evento where id_evento = ${id}`
+        let = sql = `delete from tb_itens where id_item = ${id}`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
             return result
@@ -94,10 +97,10 @@ const setDeleteEvent = async function(id) {
         return false
     }
 }
-module.exports ={
-    getAllEvents,
-    getEventById,
-    setInsertEvent,
-    setUpdateEvent,
-    setDeleteEvent
+module.exports = {
+    getAllItens,
+    getItenById,
+    setInsertIten,
+    setUpdateIten,
+    setDeleteIten
 }
