@@ -1,22 +1,23 @@
 /***********************************************
- * Objetivo: Arquivo de responsavel pela manipulação da camada model de familia
+ * Objetivo: Arquivo de responsavel pela manipulação da camada model de usuarios
  * Autor: Gustavo de Paula Silva
- * Data: 27/04/2026
+ * Data: 24/04/2026
  * Versão: 1.0
  ************************************************/
-const listaDAO = require("../../model/DAO/lista.js")
+
+const notificacaoDAO = require("../../model/DAO/notificacao.js")
 const mesagensDefault = require("../modulo/config_messages.js")
 const validarDados = require("../modulo/validar_dados.js")
 const validarAtributos = require("../modulo/validar_atributos.js")
 
-//GET
-const listarListas = async function () {
+// GET
+const listarNotificacoes = async function () {
     try {
-        let result = await listaDAO.getAllLists()
+        let result = await notificacaoDAO.getAllNotifications()
         if (result) {
             if (result.length > 0) {
                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                mesagensDefault.HEADER.Response.listas = result
+                mesagensDefault.HEADER.Response.notificacoes = result
             } else {
                 mesagensDefault.ERRO_NOT_FOUND
             }
@@ -27,16 +28,17 @@ const listarListas = async function () {
         mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
-//GET id
-const listarListaID = async function (id) {
+
+// GET id
+const listarNotificacaoID = async function (id) {
     let idValidado = validarAtributos.validarValorId(id)
     try {
         if (idValidado) {
-            let result = await listaDAO.getListById(id)
+            let result = await notificacaoDAO.getNotificationById(id)
             if (result) {
                 if (result.length > 0) {
                     mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                    mesagensDefault.HEADER.Response.lista = result
+                    mesagensDefault.HEADER.Response.notificacao = result
                 } else {
                     mesagensDefault.ERRO_NOT_FOUND
                 }
@@ -52,13 +54,13 @@ const listarListaID = async function (id) {
 }
 
 // POST
-const criarLista = async function (lista, contentType) {
-    let dadosValidados = validarDados.validarDadosLista(lista)
+const criarNotificacao = async function (notificacao, contentType) {
+    let dadosValidados = validarDados.validarDadosNotificacao(notificacao)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     try {
         if (contentTypeValidado) {
             if (dadosValidados) {
-                let result = await listaDAO.setInsertList(lista)
+                let result = await notificacaoDAO.setInsertNotification(notificacao)
                 if (result) {
                     if (result.length > 0) {
                         mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_CREATED_ITEM.StatusCode
@@ -79,20 +81,20 @@ const criarLista = async function (lista, contentType) {
         mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
+
 // PUT
-const atulizarLista = async function (lista, contentType, id) {
-    let dadosValidados = validarDados.validarDadosLista(lista)
+const atulizarNotificacao = async function (notificacao, contentType, id) {
+    let dadosValidados = validarDados.validarDadosNotificacao(notificacao)
     let contentTypeValidado = validarAtributos.validarContentType(contentType)
     let idValidado = validarAtributos.validarValorId(id)
-
     try {
         if (idValidado) {
-            let buscarId = listaDAO.getListById(id)
+            let buscarId = notificacaoDAO.getNotificationById(id)
             if (contentTypeValidado) {
                 if (dadosValidados) {
-                    if (buscarId) {
-                        lista.id_lista = parseInt(id)
-                        let result = await listaDAO.setUpdateList(lista)
+                    if (buscarId.StatusCode == 200) {
+                        notificacao.id_notificacao = parseInt(id)
+                        let result = await notificacaoDAO.setUpdateNotification(notificacao)
                         if (result) {
                             if (result.length > 0) {
                                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_UPDATED_ITEM.StatusCode
@@ -118,13 +120,13 @@ const atulizarLista = async function (lista, contentType, id) {
     }
 }
 // DELETE
-const excluirLista = async function (id) {
+const excluirNotificacao = async function (id) {
     let idValidado = validarAtributos.validarValorId(id)
     try {
         if (idValidado) {
-            let buscarId = await listaDAO.getListById(id)
+            let buscarId = await notificacaoDAO.getNotificationById(id)
             if (buscarId.StatusCode == 200) {
-                let result = await listaDAO.setUpdateList(id)
+                let result = await notificacaoDAO.setDeleteNotification(id)
                 if (result) {
                     if (result.length > 0) {
                         mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_DELETED_ITEM.StatusCode
@@ -144,9 +146,9 @@ const excluirLista = async function (id) {
     }
 }
 module.exports = {
-    listarListas,
-    listarListaID,
-    criarLista,
-    atulizarLista,
-    excluirLista
+    listarNotificacoes,
+    listarNotificacaoID,
+    criarNotificacao,
+    atulizarNotificacao,
+    excluirNotificacao
 }
