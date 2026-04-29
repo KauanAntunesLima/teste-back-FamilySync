@@ -18,8 +18,7 @@ const listarUsuarios = async function(){
             if(result.length > 0){
                 // console.log(result.length)
                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                mesagensDefault.HEADER.Response.usuarios = result[0]
-                console.log(mesagensDefault.HEADER.Response.usuarios)
+                mesagensDefault.HEADER.Response = result[0]
                 return mesagensDefault.HEADER
             }else{
                 return mesagensDefault.ERRO_NOT_FOUND
@@ -43,7 +42,7 @@ const listarUsuarioID = async function(id){
             if(result){
                 if(result.length > 0){
                     mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                    mesagensDefault.HEADER.Response.usuario = result[0]
+                    mesagensDefault.HEADER.Response = result[0]
                     return mesagensDefault.HEADER
                 }else{
                     return mesagensDefault.ERRO_NOT_FOUND
@@ -55,14 +54,14 @@ const listarUsuarioID = async function(id){
             return mesagensDefault.ERRO_INVALID_ID
         }
     } catch (error) {
-        return mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+        return mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
     }
 }
 // POST
 const criarUsuario = async function(usuario, contentType) {
-    let dadosValidados = validarDados.validarDadosUsuario(usuario)
-    let contentTypeValidado = validarAtributos.validarContentType(contentType)
     try {
+        let dadosValidados = validarDados.validarDadosUsuario(usuario)
+        let contentTypeValidado = validarAtributos.validarContentType(contentType)
         if(contentTypeValidado){
             if(dadosValidados){
                 let result = await usuarioDAO.setInsertUser(usuario)
