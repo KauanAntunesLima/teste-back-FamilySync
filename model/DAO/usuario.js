@@ -12,7 +12,7 @@ const knexDatabase = knex(knexConfig.development);
 //GET 
 const getAllUsers = async function(){
     try{
-        let sql = "select * from tbl_usuario"
+        let sql = "select * from tb_usuario"
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
             return result
@@ -29,6 +29,7 @@ const getUserById = async function(id) {
     try{
         let sql = `select * from tb_usuario where id_usuario = ${id}`
         let result = await knexDatabase.raw(sql)
+        console.log(result)
         if(Array.isArray(result[0])){
             return result
         }else{
@@ -47,15 +48,13 @@ const setInsertUser = async function(usuario) {
                         cpf,
                         data_nascimento,
                         senha,
-                        email,
-                        is_admin
+                        email
                     )values(
                         '${usuario.nome}',
                         '${usuario.cpf}',
                         '${usuario.data_nascimento}',
                         '${usuario.senha}',
-                        '${usuario.email}',
-                        '${usuario.is_admin}'
+                        '${usuario.email}'
                     )`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
@@ -76,8 +75,7 @@ const setUpdateUser = async function(usuario) {
                         cpf = '${usuario.cpf}',
                         data_nascimento = '${usuario.data_nascimento}',
                         senha = '${usuario.senha}',
-                        email = '${usuario.email}',
-                        is_admin = ${usuario.is_admin}
+                        email = '${usuario.email}'
                     where id_usuario = ${usuario.id_usuario}
                     )`
         let result = await knexDatabase.raw(sql)

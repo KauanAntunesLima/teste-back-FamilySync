@@ -42,7 +42,7 @@ const getFamilyById = async function(id) {
 //POST
 const setInsertFamily = async function(familia) {
     try{
-        let sql = `insert into tb_usuario(
+        let sql = `insert into tb_familia(
                         nome,
                         telefone_residencial
                     )values(
@@ -63,7 +63,7 @@ const setInsertFamily = async function(familia) {
 //PUT
 const setUpdateFamily = async function(familia) {
     try{
-        let sql = `update tb_usuario set
+        let sql = `update tb_familia set
                         nome = '${familia.nome}',
                         telefone_residencial = '${familia.telefone_residencial}'
                     where id_familia = ${familia.id_familia}

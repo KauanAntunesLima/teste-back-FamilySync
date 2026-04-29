@@ -27,7 +27,7 @@ const getAllInformations = async function() {
 //GET por id
 const getInformationById = async function(id) {
     try {
-        let sql = `select * from tb_informacao where id_informacao = ${id}`
+        let sql = `select * from tb_informacao where id_info = ${id}`
         let result = await knexDatabase.raw(sql)
 
         if(Array.isArray(result[0])){
@@ -65,7 +65,7 @@ const setUpdateInformation = async function(informacao) {
         let sql = `update tb_informacao set
                         titulo = '${informacao.titulo}',
                         descricao = '${informacao.descricao}'
-                    where id_informacao = ${informacao.id}
+                    where id_info = ${informacao.id}
                     )`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
@@ -80,7 +80,7 @@ const setUpdateInformation = async function(informacao) {
 //DELETE
 const setDeleteInformation = async function(id) {
     try {
-        let = sql = `delete from tb_informacao where id_informacao = ${id}`
+        let = sql = `delete from tb_informacao where id_info = ${id}`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result[0])){
             return result
