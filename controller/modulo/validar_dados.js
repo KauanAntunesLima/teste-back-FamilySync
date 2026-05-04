@@ -133,6 +133,27 @@ const validarDadosNotificacao = async function (notificacao) {
         console.log(error)
     }
 }
+const validarDadosEndereco = async function(endereco) {
+    try {
+        if (endereco.cep == null || endereco.cep == "" || endereco.cep == undefined || !isNaN(endereco.cep)) {
+            return false
+        }else if (endereco.estado == null || endereco.estado == "" || endereco.estado == undefined || endereco.estado.length > 100) {
+            return false
+        }else if (endereco.cidade == null || endereco.cidade == "" || endereco.cidade == undefined || endereco.cidade.length > 100) {
+            return false
+        }else if (endereco.bairro == null || endereco.bairro == "" || endereco.bairro == undefined || endereco.bairro.length > 100) {
+            return false
+        }else if (endereco.logradouro == null || endereco.logradouro == "" || endereco.logradouro == undefined || endereco.logradouro.length > 100) {
+            return false
+        }else if (endereco.complemento == null || endereco.complemento == "" || endereco.complemento == undefined || endereco.complemento.length > 100) {
+            return false
+        }else if (endereco.numero == null || endereco.numero == "" || endereco.numero == undefined || !isNaN(endereco.numero)) {
+            return false
+        }
+    } catch (error) {
+        
+    }
+}
 module.exports = {
     validarDadosUsuario,
     validarDadosFamilia,
@@ -141,5 +162,6 @@ module.exports = {
     validarDadosLista,
     validarDadosInformacao,
     validarDadosFinancia,
-    validarDadosNotificacao
+    validarDadosNotificacao,
+    validarDadosEndereco
 }

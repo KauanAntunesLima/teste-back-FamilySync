@@ -14,7 +14,7 @@ const getAllUsers = async function(){
     try{
         let sql = "select * from tb_usuario"
         let result = await knexDatabase.raw(sql)
-        if(Array.isArray(result[0])){
+        if(Array.isArray(result)){
             // console.log(result)
             return result
         }else{
@@ -30,7 +30,7 @@ const getUserById = async function(id) {
     try{
         let sql = `select * from tb_usuario where id_usuario = ${id}`
         let result = await knexDatabase.raw(sql)
-        if(Array.isArray(result[0])){
+        if(Array.isArray(result)){
             // console.log(result)
             return result
         }else{

@@ -16,15 +16,16 @@ const listarItens = async function() {
         if(result){
             if(result.length > 0){
                 mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                mesagensDefault.HEADER.Response.itens = result
+                mesagensDefault.HEADER.Response = result[0]
+                return mesagensDefault.HEADER
             }else{
-                mesagensDefault.ERRO_NOT_FOUND
+                return mesagensDefault.ERRO_NOT_FOUND
             }  
         }else{
-            mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
+            return mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
         }
     } catch (error) {
-        mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+        return mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
 //GET id
@@ -36,7 +37,7 @@ const listarItemID = async function(id) {
             if(result){
                 if(result.length > 0){
                     mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                    mesagensDefault.HEADER.Response.item = result
+                    mesagensDefault.HEADER.Response = result[0]
                 }else{
                     mesagensDefault.ERRO_NOT_FOUND
                 }
