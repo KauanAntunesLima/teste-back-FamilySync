@@ -15,13 +15,13 @@ const getAllLists = async function() {
         let sql = `select * from tb_lista`
         let result = await knexDatabase.raw(sql)
 
-        if(Array.isArray(result[0])){
+        if(Array.isArray(result)){
             return result
         }else{
             return false
         } 
     } catch (error) {
-        return false   
+        return error   
     }
 }
 //GET por id
@@ -30,13 +30,13 @@ const getListById = async function(id) {
         let sql = `select * from tb_lista where id_lista = ${id}`
         let result = await knexDatabase.raw(sql)
 
-        if(Array.isArray(result[0])){
+        if(Array.isArray(result)){
             return result
         }else{
             return false
         } 
     } catch (error) {
-        return false   
+        return error   
     }
 }
 //POST
@@ -48,13 +48,13 @@ const setInsertList = async function(lista) {
                         '${lista.nome}'
                     )`
         let result = await knexDatabase.raw(sql)
-        if(Array.isArray(result[0])){
+        if(Array.isArray(result)){
             return result
         }else{
             return false
         }
     } catch (error) {
-        return false
+        return error
     }
 }
 //PUT
@@ -65,13 +65,13 @@ const setUpdateList = async function(lista) {
                     where id_lista = ${lista.id_lista}
                     )`
         let result = await knexDatabase.raw(sql)
-        if(Array.isArray(result[0])){
+        if(Array.isArray(result)){
             return result
         }else{
             return false
         }
     } catch (error) {
-        return false
+        return error
     }
 }
 //DELETE
@@ -79,13 +79,13 @@ const setDeleteList = async function(id) {
     try {
         let = sql = `delete from tb_lista where id_lista = ${id}`
         let result = await knexDatabase.raw(sql)
-        if(Array.isArray(result[0])){
+        if(Array.isArray(result)){
             return result
         }else{
             return false
         }
     } catch (error) {
-        return false
+        return error
     }
 }
 module.exports = {
