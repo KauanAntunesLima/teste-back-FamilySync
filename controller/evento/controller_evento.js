@@ -1,152 +1,159 @@
 /***********************************************
- * Objetivo: Arquivo de responsavel pela manipulação da camada model de familia
+ * Objetivo: Arquivo responsável pela manipulação da camada model de evento
  * Autor: Gustavo de Paula Silva
  * Data: 24/04/2026
- * Versão: 1.0
+ * Versão: 1.1
  ************************************************/
+
 const eventoDAO = require("../../model/DAO/evento.js")
-const mesagensDefault = require("../modulo/config_messages.js")
+const mensagensDefault = require("../modulo/config_messages.js")
 const validarDados = require("../modulo/validar_dados.js")
 const validarAtributos = require("../modulo/validar_atributos.js")
 
-
-// GET
-const listarEventos = async function(){
+// GET ALL
+const listarEventos = async function () {
     try {
         let result = await eventoDAO.getAllEvents()
-        if(result){
-            if(result.length > 0){
-                mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                mesagensDefault.HEADER.Response.eventos = result
-            }else{
-                mesagensDefault.ERRO_NOT_FOUND
-            }  
-        }else{
-            mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
-        }
-    } catch (error) {
-        mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
-    }
-}
-// GET id
-const listarEventoID = async function(id){
-    let idValidado = validarAtributos.validarValorId(id)
-    try {
-        if(idValidado){
-            let result = await eventoDAO.getEventById(id)
-            if(result){
-                if(result.length > 0){
-                    mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_REQUEST.StatusCode
-                    mesagensDefault.HEADER.Response.evento = result
-                }else{
-                    mesagensDefault.ERRO_NOT_FOUND
-                }
-            }else{
-                mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
-            }    
-        }else{
-            mesagensDefault.ERRO_INVALID_ID
-        }
-    } catch (error) {
-        mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
-    }
-}
-//POST
-const criarEvento = async function(evento, contentType) {
-    let dadosValidados = validarDados.validarDadosEvento(evento)
-    let contentTypeValidado = validarAtributos.validarContentType(contentType)
-    try {
-        if(contentTypeValidado){
-            if(dadosValidados){
-                let result = await eventoDAO.setInsertEvent(evento)
-                if(result){
-                    if(result.length > 0){
-                        mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_CREATED_ITEM.StatusCode
-                        mesagensDefault.HEADER.Response = mesagensDefault.SUCCESS_CREATED_ITEM.message
-                    }else{
-                        mesagensDefault.ERRO_NOT_FOUND
-                    }
-                }else{
-                    mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
-                }
-            }else{
-                mesagensDefault.ERRO_REQUIRED_FIELDS
+
+        if (result) {
+            if (result.length > 0) {
+                mensagensDefault.HEADER.StatusCode = mensagensDefault.SUCCESS_REQUEST.StatusCode
+                mensagensDefault.HEADER.Response = result
+                return mensagensDefault.HEADER
+            } else {
+                return mensagensDefault.ERRO_NOT_FOUND
             }
-        }else{
-            mesagensDefault.ERRO_CONTENT_TYPE
+        } else {
+            return mensagensDefault.ERRO_INTERNAL_SERVER_MODEL
         }
+
     } catch (error) {
-        mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
+// GET BY ID
+const listarEventoID = async function (id) {
+    let idValidado = validarAtributos.validarValorId(id)
+
+    try {
+        if (!idValidado) {
+            let result = await eventoDAO.getEventById(id)
+
+            if (result && result.length > 0) {
+                mensagensDefault.HEADER.StatusCode = mensagensDefault.SUCCESS_REQUEST.StatusCode
+                mensagensDefault.HEADER.Response = result[0]
+                return mensagensDefault.HEADER
+            } else {
+                return mensagensDefault.ERRO_NOT_FOUND
+            }
+
+        } else {
+            return mensagensDefault.ERRO_INVALID_ID
+        }
+
+    } catch (error) {
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
+// POST
+const criarEvento = async function (evento, contentType) {
+    try {
+        let dadosValidados = validarDados.validarDadosEvento(evento)
+        let contentTypeValidado = validarAtributos.validarContentType(contentType)
+
+        if (!contentTypeValidado)
+            return mensagensDefault.ERRO_CONTENT_TYPE
+
+        if (!dadosValidados)
+            return mensagensDefault.ERRO_REQUIRED_FIELDS
+
+        let result = await eventoDAO.setInsertEvent(evento)
+
+        if (result) {
+            mensagensDefault.HEADER.StatusCode = mensagensDefault.SUCCESS_CREATED_ITEM.StatusCode
+            mensagensDefault.HEADER.Response = mensagensDefault.SUCCESS_CREATED_ITEM.message
+            return mensagensDefault.HEADER
+        } else {
+            return mensagensDefault.ERRO_INTERNAL_SERVER_MODEL
+        }
+
+    } catch (error) {
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
 
 // PUT
-const atulizarEvento = async function(evento, contentType, id) {
-    let dadosValidados = validarDados.validarDadosEvento(evento)
-    let contentTypeValidado = validarAtributos.validarContentType(contentType)
-    let idValidado = validarAtributos.validarValorId(id)
+const atualizarEvento = async function (evento, contentType, id) {
     try {
-        if(idValidado){
-            let buscarId = eventoDAO.getEventById(id)
-            if(contentTypeValidado){
-                if(dadosValidados){
-                    if(buscarId.StatusCode == 200){
-                        evento.id_evento = parseInt(id)
-                        let result = await eventoDAO.setUpdateEvent(evento)
-                        if(result){
-                            if(result.length > 0){
-                                mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_UPDATED_ITEM.StatusCode
-                                mesagensDefault.HEADER.Response = mesagensDefault.SUCCESS_UPDATED_ITEM.message
-                            }
-                        }else{
-                            mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
-                        }
-                    }else{
-                        return buscarId
-                    }
-                }else{
-                    mesagensDefault.ERRO_REQUIRED_FIELDS
-                }
-            }else{
-                mesagensDefault.ERRO_CONTENT_TYPE
-            }
-        }else{
-            mesagensDefault.ERRO_INVALID_ID
+        let dadosValidados = validarDados.validarDadosEvento(evento)
+        let contentTypeValidado = validarAtributos.validarContentType(contentType)
+        let idValidado = validarAtributos.validarValorId(id)
+
+        if (idValidado)
+            return mensagensDefault.ERRO_INVALID_ID
+
+        if (!contentTypeValidado)
+            return mensagensDefault.ERRO_CONTENT_TYPE
+
+        if (!dadosValidados)
+            return mensagensDefault.ERRO_REQUIRED_FIELDS
+
+        let buscarId = await eventoDAO.getEventById(id)
+
+        if (!buscarId || buscarId.length === 0)
+            return mensagensDefault.ERRO_NOT_FOUND
+
+        evento.id_evento = parseInt(id)
+
+        let result = await eventoDAO.setUpdateEvent(evento)
+
+        if (result) {
+            mensagensDefault.HEADER.StatusCode = mensagensDefault.SUCCESS_UPDATED_ITEM.StatusCode
+            mensagensDefault.HEADER.Response = mensagensDefault.SUCCESS_UPDATED_ITEM.message
+            return mensagensDefault.HEADER
+        } else {
+            return mensagensDefault.ERRO_INTERNAL_SERVER_MODEL
         }
+
     } catch (error) {
-        mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
+
 // DELETE
-const excluirEvento = async function(id) {
+const excluirEvento = async function (id) {
     let idValidado = validarAtributos.validarValorId(id)
+
     try {
-        if(idValidado){
-            let buscarId = await eventoDAO.getEventById(id)
-            if(buscarId.StatusCode == 200){
-                let result = await eventoDAO.setDeleteEvent(id)
-                if(result){
-                    if(result.length > 0){
-                        mesagensDefault.HEADER.StatusCode = mesagensDefault.SUCCESS_DELETED_ITEM.StatusCode
-                        mesagensDefault.HEADER.Response = mesagensDefault.SUCCESS_DELETED_ITEM.message
-                    }
-                }else{
-                    mesagensDefault.ERRO_INTERNAL_SERVER_MODEL
-                }
-            }else{
-                return buscarId
-            }
-        }else{
-            mesagensDefault.ERRO_INVALID_ID
+        if (idValidado)
+            return mensagensDefault.ERRO_INVALID_ID
+
+        let buscarId = await eventoDAO.getEventById(id)
+
+        if (!buscarId || buscarId.length === 0)
+            return mensagensDefault.ERRO_NOT_FOUND
+
+        let result = await eventoDAO.setDeleteEvent(id)
+
+        if (result) {
+            mensagensDefault.HEADER.StatusCode = mensagensDefault.SUCCESS_DELETED_ITEM.StatusCode
+            mensagensDefault.HEADER.Response = mensagensDefault.SUCCESS_DELETED_ITEM.message
+            return mensagensDefault.HEADER
+        } else {
+            return mensagensDefault.ERRO_INTERNAL_SERVER_MODEL
         }
+
     } catch (error) {
-        mesagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
     }
 }
+
 module.exports = {
-    listarEventoID,
     listarEventos,
+    listarEventoID,
     criarEvento,
-    excluirEvento,
-    atulizarEvento 
+    atualizarEvento,
+    excluirEvento
 }
