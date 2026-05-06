@@ -7,6 +7,8 @@ const app = express();
 const PORT = 3000;
 
 const routerUsuario = require('./routes/usuario/route_usuario.js')
+const routerFincancas = require('./routes/financas/route_financas.js')
+
 
 app.use(cors());
 app.use(express.json());
@@ -28,6 +30,7 @@ app.get('/teste-banco', async (req, res) => {
 });
 
 app.use('/v1/familysync', routerUsuario);
+app.use('/v1/familysync', routerFincancas);
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);

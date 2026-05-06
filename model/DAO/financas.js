@@ -43,11 +43,13 @@ const getFinanceById = async function(id) {
 const setInsertFinance = async function(financas) {
     try {
         let sql = `insert into tb_financas(
+                        id_familia,
                         tipo,
                         descricao,
                         valor,
                         icone
                     )values(
+                        ${financas.id_familia},
                         '${financas.tipo}',
                         '${financas.descricao}',
                         ${financas.valor},
@@ -71,8 +73,7 @@ const setUpdateFinance = async function(financas) {
                         descricao = '${financas.descricao}',
                         valor = ${financas.valor},
                         icone = '${financas.icone}'
-                    where id_financas = ${financas.id}
-                    )`
+                    where id_financas = ${financas.id_financas}`
         let result = await knexDatabase.raw(sql)
         if(Array.isArray(result)){
             return result
