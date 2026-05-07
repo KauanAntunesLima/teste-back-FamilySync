@@ -154,6 +154,20 @@ const validarDadosEndereco = async function(endereco) {
         
     }
 }
+
+const validarUsuarioInformacao = (usuarioInformacao) => {
+    try {
+        if (usuarioInformacao.id_usuario == null || usuarioInformacao.id_usuario == "" || isNaN(usuarioInformacao.id_usuario) || usuarioInformacao.id_usuario <= 0) {
+            return false;
+        } else if (usuarioInformacao.id_info == null || usuarioInformacao.id_info == "" || isNaN(usuarioInformacao.id_info) || usuarioInformacao.id_info <= 0) {
+            return false;
+        }  
+        return true; 
+    } catch (error) {
+        return false;
+    }
+}
+
 module.exports = {
     validarDadosUsuario,
     validarDadosFamilia,
@@ -163,5 +177,6 @@ module.exports = {
     validarDadosInformacao,
     validarDadosFinancia,
     validarDadosNotificacao,
-    validarDadosEndereco
+    validarDadosEndereco,
+    validarUsuarioInformacao
 }

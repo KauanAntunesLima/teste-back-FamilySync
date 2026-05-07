@@ -1,7 +1,7 @@
 /***********************************************
  * Objetivo: Arquivo de responsavel pela realização do CRUD no banco de dados SQL
- * Autor: Gustavo de Paula Silva
- * Data: 27/04/2026
+ * Autor: Kauan Antunes
+ * Data: 06/05/2026
  * Versão: 1.0
  ************************************************/
 const knex = require("knex");
