@@ -1,7 +1,7 @@
 /***********************************************
- * Objetivo: Arquivo de responsavel pela manipulação de routas de usuario_informacao na API
+ * Objetivo: Arquivo de responsavel pela manipulação de routas de usuario_familia na API
  * Autor: Kauan Antunes
- * Data: 07/05/2026
+ * Data: 11/05/2026
  * Versão: 1.0
  ************************************************/
 
@@ -11,7 +11,7 @@ const bodyParser = require('body-parser')
 
 const bodyParserJSON = bodyParser.json()
 
-const controller = require('../../controller/usuario/controller_usuario_informacao')
+const controller = require('../../controller/usuario/controller_usuario_familia')
 const router = express.Router()
 
 router.use((request, response, next) =>{
@@ -22,37 +22,37 @@ router.use((request, response, next) =>{
     next()
 })
 
-router.get("/usuarios-informacoes", cors(), async function(request, response) {
-    let result = await controller.listarUsuarioInformacao()
+router.get("/usuarios-familia", cors(), async function(request, response) {
+    let result = await controller.listarUsuarioFamilia()
     response.json(result)
 })
 
-router.get("/usuario-informacao/:id", cors(), async function(request, response) {
+router.get("/usuario-familia/:id", cors(), async function(request, response) {
     let id = request.params.id
-    let result = await controller.listarUsuarioInformacaoID(id)
+    let result = await controller.listarUsuarioFamiliaID(id)
     response.json(result)
 })
-router.delete("/usuario-informacao/:id", cors(), async function(request, response) {
+router.delete("/usuario-familia/:id", cors(), async function(request, response) {
     let id = request.params.id
-    let result = await controller.excluirUsuarioInformacao(id)
+    let result = await controller.excluirUsuarioFamilia(id)
     response.json(result)
 })
 
-router.post("/usuario-informacao", cors(), bodyParserJSON, async function(request, response) {
+router.post("/usuario-familia", cors(), bodyParserJSON, async function(request, response) {
     console.log("BODY:", request.body)
     
     let dadosBody = request.body
     let contentType = request.headers["content-type"]
 
-    let result = await controller.criarUsuarioInformacao(dadosBody, contentType)
+    let result = await controller.criarUsuarioFamilia(dadosBody, contentType)
     response.json(result)
 })
-router.put("/usuario-informacao/:id", cors(), async function(request, response) {
+router.put("/usuario-familia/:id", cors(), async function(request, response) {
     let id = request.params.id
     let dadosBody = request.body
     let contentType = request.headers["content-type"]
 
-    let result = await controller.atualizarUsuarioInformacao(dadosBody, contentType, id)
+    let result = await controller.atualizarUsuarioFamilia(dadosBody, contentType, id)
     response.json(result)
 })
 module.exports = router;
