@@ -181,6 +181,19 @@ const validarUsuarioFamilia = (usuarioFamilia) => {
     }
 }
 
+const validarUsuarioNotificacao = (usuarioNotificacao) => {
+    try {
+        if (usuarioNotificacao.id_usuario == null || usuarioNotificacao.id_usuario == "" || isNaN(usuarioNotificacao.id_usuario) || usuarioNotificacao.id_usuario <= 0) {
+            return false;
+        } else if (usuarioNotificacao.id_notificacao == null || usuarioNotificacao.id_notificacao == "" || isNaN(usuarioNotificacao.id_notificacao) || usuarioNotificacao.id_notificacao <= 0) {
+            return false;
+        }  
+        return true; 
+    } catch (error) {
+        return false;
+    }
+}
+
 
 module.exports = {
     validarDadosUsuario,
@@ -194,5 +207,5 @@ module.exports = {
     validarDadosEndereco,
     validarUsuarioInformacao,
     validarUsuarioFamilia,
-
+    validarUsuarioNotificacao
 }
