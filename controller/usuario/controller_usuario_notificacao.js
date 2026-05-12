@@ -13,7 +13,7 @@ const validarAtributos = require("../modulo/validar_atributos.js")
 const listarUsuarioNotificacao = async function () {
     try {
         let result = await usuario_notificacaoDAO.getAllUsersNotification()
-console.log(result)
+
         if (result && result.length > 0) {
             return {
                 status_code: mensagensDefault.SUCCESS_REQUEST.StatusCode,

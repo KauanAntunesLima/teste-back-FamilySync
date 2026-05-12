@@ -33,13 +33,13 @@ router.get("/usuario-notificacao/:id", cors(), async function(request, response)
     let result = await controller.listarUsuarioNotificacaoID(id)
     response.json(result)
 })
-router.delete("/usuario-familia/:id", cors(), async function(request, response) {
+router.delete("/usuario-notificacao/:id", cors(), async function(request, response) {
     let id = request.params.id
     let result = await controller.excluirUsuarioNotificacao(id)
     response.json(result)
 })
 
-router.post("/usuario-familia", cors(), bodyParserJSON, async function(request, response) {
+router.post("/usuario-notificacao", cors(), bodyParserJSON, async function(request, response) {
     console.log("BODY:", request.body)
     
     let dadosBody = request.body
@@ -48,7 +48,7 @@ router.post("/usuario-familia", cors(), bodyParserJSON, async function(request, 
     let result = await controller.criarUsuarioNotificacao(dadosBody, contentType)
     response.json(result)
 })
-router.put("/usuario-familia/:id", cors(), async function(request, response) {
+router.put("/usuario-notificacao/:id", cors(), async function(request, response) {
     let id = request.params.id
     let dadosBody = request.body
     let contentType = request.headers["content-type"]
