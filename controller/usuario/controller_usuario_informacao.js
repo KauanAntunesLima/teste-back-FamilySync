@@ -30,7 +30,7 @@ const listarUsuarioInformacao = async function () {
 
 const listarUsuarioInformacaoID = async function (id) {
     try {
-        if (!validarAtributos.validarValorId(id))
+        if (!validarAtributos.validarId(id))
             return mensagensDefault.ERRO_INVALID_ID
 
         let result = await usuario_informacaoDAO.getUsersInformationById(id)
@@ -73,7 +73,7 @@ const criarUsuarioInformacao = async function (usuarioInformacao, contentType) {
 
 const atualizarUsuarioInformacao = async function (usuarioInformacao, contentType, id) {
     try {
-        if (!validarAtributos.validarValorId(id))
+        if (!validarAtributos.validarId(id))
             return mensagensDefault.ERRO_INVALID_ID
 
         if (!validarAtributos.validarContentType(contentType))
@@ -104,7 +104,7 @@ const atualizarUsuarioInformacao = async function (usuarioInformacao, contentTyp
 
 const excluirUsuarioInformacao = async function (id) {
     try {
-        if (!validarAtributos.validarValorId(id))
+        if (!validarAtributos.validarId(id))
             return mensagensDefault.ERRO_INVALID_ID
 
         let buscarId = await usuario_informacaoDAO.getUsersInformationById(id)

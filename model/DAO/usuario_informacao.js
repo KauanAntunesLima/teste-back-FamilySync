@@ -48,7 +48,7 @@ const getUsersInformationById = async function (id) {
                     INNER JOIN tb_informacao i
                         ON i.id_info = ui.id_info
         
-                    WHERE ui.id_usuario_informacao = ?    `
+                    WHERE ui.id_usuario_informacao = ?`
         let result = await knexDatabase.raw(sql, [id])
 
         return result[0]
