@@ -47,7 +47,7 @@ router.post("/usuario-informacao", cors(), bodyParserJSON, async function(reques
     let result = await controller.criarUsuarioInformacao(dadosBody, contentType)
     response.json(result)
 })
-router.put("/usuario-informacao/:id", cors(), async function(request, response) {
+router.put("/usuario-informacao/:id", cors(), bodyParserJSON, async function(request, response) {
     let id = request.params.id
     let dadosBody = request.body
     let contentType = request.headers["content-type"]

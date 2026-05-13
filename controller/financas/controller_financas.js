@@ -55,6 +55,102 @@ const listarFinancasID = async function (id) {
     }
 }
 
+const listarFinancasDiarias = async function (idFamilia) {
+
+    let idValidado = validarAtributos.validarId(idFamilia)
+    try {
+        if (idValidado) {
+            let result = await financasDAO.getDailyFinances(idFamilia)
+
+            if (result && result.length > 0) {
+                mensagensDefault.HEADER.StatusCode =
+                    mensagensDefault.SUCCESS_REQUEST.StatusCode
+                mensagensDefault.HEADER.Response = result[0]
+                return mensagensDefault.HEADER
+
+            } else {
+                return mensagensDefault.ERRO_NOT_FOUND
+            }
+        } else {
+            return mensagensDefault.ERRO_INVALID_ID
+        }
+    } catch (error) {
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
+const listarFinancasSemanais = async function (idFamilia) {
+
+    let idValidado = validarAtributos.validarId(idFamilia)
+    try {
+        if (idValidado) {
+            let result = await financasDAO.getWeekFinances(idFamilia)
+
+            if (result && result.length > 0) {
+                mensagensDefault.HEADER.StatusCode =
+                    mensagensDefault.SUCCESS_REQUEST.StatusCode
+                mensagensDefault.HEADER.Response = result[0]
+                return mensagensDefault.HEADER
+
+            } else {
+                return mensagensDefault.ERRO_NOT_FOUND
+            }
+        } else {
+            return mensagensDefault.ERRO_INVALID_ID
+        }
+    } catch (error) {
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
+const listarFinancasMensais = async function (idFamilia) {
+
+    let idValidado = validarAtributos.validarId(idFamilia)
+    try {
+        if (idValidado) {
+            let result = await financasDAO.getMonthFinances(idFamilia)
+
+            if (result && result.length > 0) {
+                mensagensDefault.HEADER.StatusCode =
+                    mensagensDefault.SUCCESS_REQUEST.StatusCode
+                mensagensDefault.HEADER.Response = result[0]
+                return mensagensDefault.HEADER
+
+            } else {
+                return mensagensDefault.ERRO_NOT_FOUND
+            }
+        } else {
+            return mensagensDefault.ERRO_INVALID_ID
+        }
+    } catch (error) {
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
+const listarFinancasAnuais = async function (idFamilia) {
+
+    let idValidado = validarAtributos.validarId(idFamilia)
+    try {
+        if (idValidado) {
+            let result = await financasDAO.getYearFinances(idFamilia)
+
+            if (result && result.length > 0) {
+                mensagensDefault.HEADER.StatusCode =
+                    mensagensDefault.SUCCESS_REQUEST.StatusCode
+                mensagensDefault.HEADER.Response = result[0]
+                return mensagensDefault.HEADER
+
+            } else {
+                return mensagensDefault.ERRO_NOT_FOUND
+            }
+        } else {
+            return mensagensDefault.ERRO_INVALID_ID
+        }
+    } catch (error) {
+        return mensagensDefault.ERRO_INTERNAL_SERVER_CONTROLLER
+    }
+}
+
 const criarFinancas = async function (financas, contentType) {
     try {
         let dadosValidados = validarDados.validarDadosFinancia(financas)
@@ -148,6 +244,10 @@ const excluirFinancas = async function (id) {
 module.exports = {
     listarFinancas,
     listarFinancasID,
+    listarFinancasDiarias,
+    listarFinancasSemanais,
+    listarFinancasMensais,
+    listarFinancasAnuais,
     criarFinancas,
     atualizarFinancas,
     excluirFinancas,

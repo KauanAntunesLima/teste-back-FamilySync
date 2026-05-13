@@ -39,6 +39,71 @@ const getFinanceById = async function(id) {
         return error
     }
 }
+
+//GET Financas por dia
+const getDailyFinances = async function(idFamilia) {
+    try {
+        let sql = `select * from vw_financas_diarias WHERE id_familia = ${idFamilia} ORDER BY ano, mes, dia`
+        let result = await knexDatabase.raw(sql)
+
+        if(Array.isArray(result)){
+            return result
+        }else{
+            return false
+        } 
+    } catch (error) {
+        return error
+    }
+}
+
+//GET Financas por semana
+const getWeekFinances = async function(idFamilia) {
+    try {
+        let sql = `select * from vw_financas_semanais WHERE id_familia = ${idFamilia} ORDER BY ano, mes, semana`
+        let result = await knexDatabase.raw(sql)
+
+        if(Array.isArray(result)){
+            return result
+        }else{
+            return false
+        } 
+    } catch (error) {
+        return error
+    }
+}
+
+//GET Financas por mes
+const getMonthFinances = async function(idFamilia) {
+    try {
+        let sql = `select * from vw_financas_mensais WHERE id_familia = ${idFamilia} ORDER BY ano, mes`
+        let result = await knexDatabase.raw(sql)
+
+        if(Array.isArray(result)){
+            return result
+        }else{
+            return false
+        } 
+    } catch (error) {
+        return error
+    }
+}
+
+//GET Financas por mes
+const getYearFinances = async function(idFamilia) {
+    try {
+        let sql = `select * from vw_financas_anuais WHERE id_familia = ${idFamilia} ORDER BY ano`
+        let result = await knexDatabase.raw(sql)
+
+        if(Array.isArray(result)){
+            return result
+        }else{
+            return false
+        } 
+    } catch (error) {
+        return error
+    }
+}
+
 //POST
 const setInsertFinance = async function(financas) {
     try {
@@ -101,6 +166,10 @@ const setDeleteFinance = async function(id) {
 module.exports = {
     getAllFinances,
     getFinanceById,
+    getDailyFinances,
+    getWeekFinances,
+    getMonthFinances,
+    getYearFinances,
     setInsertFinance,
     setUpdateFinance,
     setDeleteFinance

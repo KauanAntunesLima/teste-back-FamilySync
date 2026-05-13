@@ -34,6 +34,7 @@ const listarUsuarioInformacaoID = async function (id) {
             return mensagensDefault.ERRO_INVALID_ID
 
         let result = await usuario_informacaoDAO.getUsersInformationById(id)
+        console.log(result)
 
         if (result && result.length > 0) {
             return {
