@@ -39,12 +39,18 @@ router.delete("/usuario-familia/:id", cors(), async function(request, response) 
 })
 
 router.post("/usuario-familia", cors(), bodyParserJSON, async function(request, response) {
-    console.log("BODY:", request.body)
-    
     let dadosBody = request.body
     let contentType = request.headers["content-type"]
 
     let result = await controller.criarUsuarioFamilia(dadosBody, contentType)
+    response.json(result)
+})
+router.post("/usuario-familia/email", cors(), bodyParserJSON, async function(request, response) {
+    let dadosBody = request.body
+    let contentType = request.headers["content-type"]
+
+    let result = await controller.criarUsuarioFamiliaPorEmail(dadosBody, contentType )
+    console.log(result)
     response.json(result)
 })
 router.put("/usuario-familia/:id", cors(), async function(request, response) {

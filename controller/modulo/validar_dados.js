@@ -194,6 +194,16 @@ const validarUsuarioNotificacao = (usuarioNotificacao) => {
     }
 }
 
+const validarUsuarioFamiliaPorEmail = function (usuarioFamilia) {
+
+    if (usuarioFamilia.email == '' || usuarioFamilia.email == undefined || usuarioFamilia.id_familia == '' || usuarioFamilia.id_familia == undefined) {
+        return false
+    } else {
+        return true
+    }
+
+}
+
 
 module.exports = {
     validarDadosUsuario,
@@ -207,5 +217,6 @@ module.exports = {
     validarDadosEndereco,
     validarUsuarioInformacao,
     validarUsuarioFamilia,
-    validarUsuarioNotificacao
+    validarUsuarioNotificacao,
+    validarUsuarioFamiliaPorEmail
 }
