@@ -14,7 +14,7 @@ const listarUsuarioFamilia = async function () {
     try {
         let result = await usuario_familiaDAO.getAllUsersFamily()
 
-        if (result && result.length > 0) {
+        if (result) {
             return {
                 status_code: mensagensDefault.SUCCESS_REQUEST.StatusCode,
                 dados: result 
@@ -35,10 +35,10 @@ const listarUsuarioFamiliaID = async function (id) {
 
         let result = await usuario_familiaDAO.getUsersFamilyById(id)
 
-        if (result && result.length > 0) {
+        if (result) {
             return {
                 status_code: mensagensDefault.SUCCESS_REQUEST.StatusCode,
-                dados: result[0]
+                dados: result
             }
         } else {
             return mensagensDefault.ERRO_NOT_FOUND
@@ -123,7 +123,7 @@ const atualizarUsuarioFamilia = async function (usuarioFamilia, contentType, id)
 
         let buscarId = await usuario_familiaDAO.getUsersFamilyById(id)
 
-        if (!buscarId || buscarId.length === 0)
+        if (!buscarId)
             return mensagensDefault.ERRO_NOT_FOUND
 
         usuarioFamilia.id_usuario_familia = parseInt(id)
@@ -148,7 +148,7 @@ const excluirUsuarioFamilia = async function (id) {
 
         let buscarId = await usuario_familiaDAO.getUsersFamilyById(id)
 
-        if (!buscarId || buscarId.length === 0)
+        if (!buscarId)
             return mensagensDefault.ERRO_NOT_FOUND
 
         let result = await usuario_familiaDAO.setDeleteUsersFamily(id)
